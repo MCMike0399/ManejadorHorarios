@@ -20,8 +20,6 @@ export async function registro(userName: string, email: string, nombre: string, 
 }
 */
 
-
-
 import { PrismaClient } from "@prisma/client";
 import { hashPassword } from "../utils/bcryptUtils";
 
@@ -31,13 +29,17 @@ export async function registro(userName: string, email: string, nombre: string, 
    // Hashea la contraseña antes de almacenarla en la base de datos
    const hashedPassword = await hashPassword(passw);
 
+   if (!hashedPassword) {
+      throw new Error("Error al guardar la contraseña");
+   }
+
    // Crea un nuevo usuario en la base de datos con prisma client
    const nuevoUsuario = await prisma.usuario.create({
       data: {
          userName,
          email,
          nombre,
-         passw: hashedPassword, 
+         passw: hashedPassword,
       },
    });
    if (!nuevoUsuario) {

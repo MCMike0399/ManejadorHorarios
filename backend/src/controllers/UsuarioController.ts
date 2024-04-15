@@ -10,6 +10,8 @@ req.body = {
 }
 */
 
+
+
 export async function registroHandler(req: Request, res: Response) {
    // Recibimos el payload de nuestra base de datos
    const { userName, email, nombre, passw } = req.body;
